@@ -6,6 +6,9 @@ add_library (linebreak
   linebreak/linebreak.c
   linebreak/linebreakdata.c
   linebreak/linebreakdef.c)
+target_compile_options(linebreak
+  PRIVATE
+  -fPIC)
 
 target_include_directories (linebreak
   PUBLIC

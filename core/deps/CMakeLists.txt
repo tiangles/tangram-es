@@ -7,6 +7,10 @@ set(YAML_CPP_BUILD_CONTRIB OFF CACHE BOOL "")
 set(YAML_CPP_INSTALL OFF CACHE BOOL "")
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp)
 
+target_compile_options(yaml-cpp PRIVATE
+  -fPIC
+  -Wall)
+
 target_include_directories(yaml-cpp
   PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include
@@ -16,6 +20,9 @@ target_include_directories(yaml-cpp
 ##########################
 add_library(css-color-parser-cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/css-color-parser-cpp/csscolorparser.cpp)
+target_compile_options(css-color-parser-cpp PRIVATE
+  -fPIC
+  -Wall)
 
 target_include_directories(css-color-parser-cpp
   PUBLIC
@@ -30,6 +37,7 @@ target_compile_options(duktape PRIVATE
   -fstrict-aliasing
   -fomit-frame-pointer
   -std=c99
+  -fPIC
   -Wall)
 
 target_include_directories(duktape

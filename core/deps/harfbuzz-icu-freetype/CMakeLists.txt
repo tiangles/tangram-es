@@ -193,6 +193,10 @@ if (HARFBUZZ_BUILD_ICU)
         icu/common/uvectr64.cpp
         icu/stubdata/stubdata.c
         )
+    target_compile_options(icucommon PRIVATE
+      -fPIC
+      -Wall)
+
     target_include_directories(icucommon PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/icu/common
         ${CMAKE_CURRENT_SOURCE_DIR}/icu/stubdata
@@ -305,6 +309,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     -Wno-vla-extension
     -Wno-extended-offsetof)
 endif()
+
+target_compile_options(harfbuzz
+  PRIVATE
+  -fPIC)
 
 target_compile_definitions(harfbuzz PUBLIC
     PRIVATE

@@ -340,6 +340,9 @@ add_library(freetype
   ${BASE_SRCS}
 )
 
+target_compile_options(freetype
+  PRIVATE
+  -fPIC)
 
 if (BUILD_SHARED_LIBS)
   set_target_properties(freetype PROPERTIES
