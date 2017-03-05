@@ -45,6 +45,11 @@ extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT;
 #include <GLFW/glfw3.h>
 #endif
 
+#ifdef PLATFORM_QT
+#define GL_GLEXT_PROTOTYPES
+#include <qopengl.h>
+#endif
+
 #ifdef PLATFORM_RPI
 //  Broadcom hardware library for hijacking the GPU card without window manager
 //
