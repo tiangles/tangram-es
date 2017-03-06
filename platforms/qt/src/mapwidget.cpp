@@ -19,7 +19,6 @@ MapWidget::MapWidget(QWidget *parent):
 {
     QSurfaceFormat fmt = this->format();
     int smplers = fmt.samples();
-    qWarning()<<"smplers"<< smplers;
     fmt.setSamples(32);
     this->setFormat(fmt);
 }

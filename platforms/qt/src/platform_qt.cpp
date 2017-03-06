@@ -52,8 +52,7 @@ void Platform_Qt::requestRender() const{
 }
 
 bool Platform_Qt::startUrlRequest(const std::string &url, UrlCallback callback){
-    URLTask *task = new URLTask(url, callback);
-
+    auto task = std::make_shared<URLTask>(url, callback);
     bool hasIdleWorker = false;
     QList<URLTaskWorker*>::iterator i = m_workerList.begin();
     for (; i != m_workerList.end(); ++i) {
@@ -77,7 +76,7 @@ void Platform_Qt::cancelUrlRequest(const std::string &/*_url*/){
 
 void Platform_Qt::TaskRequestComplete(URLTaskWorker *worker) {
     if (!m_taskList.empty()) {
-        URLTask *task = m_taskList.front();
+        auto task = m_taskList.front();
         m_taskList.pop_front();
         worker->HandleTask(task);
     }

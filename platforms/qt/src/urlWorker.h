@@ -4,22 +4,21 @@
 #include <QNetworkAccessManager>
 #include <QByteArray>
 #include <string>
+#include <memory>
 #include "platform.h"
 
 class QNetworkReply;
 
-class URLTask {
-public:
-    URLTask(const std::string& url, UrlCallback callback);
+struct URLTask {
+    URLTask(const std::string& url, UrlCallback& callback):
+        url(url), callback(callback)
+    {
+    }
 
-public:
-    const std::string& GetURL(void) const;
-    UrlCallback GetCallback(void) const;
-
-private:
     std::string             url;
     UrlCallback             callback;
 };
+typedef std::shared_ptr<URLTask> URLTaskPtr;
 
 class URLTaskWorker : public QObject {
     Q_OBJECT
@@ -29,27 +28,29 @@ public:
     ~URLTaskWorker();
 
 public:
-    const std::string GetURL(void) const;
-    void HandleTask(const URLTask* task);
+    void HandleTask(URLTaskPtr task);
     void CancelRequest();
     bool IsDownloading(void) const;
 
 signals:
+    void StartNewRequest();
     void RequestComplete(URLTaskWorker *task);
 
 private slots:
+    void onNewRequest();
     void httpFinished();
     void httpReadyRead();
     void sslErrors(QNetworkReply* reply, const QList<QSslError>& errors);
 
 private:
+    QNetworkAccessManager       qnam;
+
     bool                        downloading;
     bool                        httpRequestAborted;
-    const URLTask               *task;
+    URLTaskPtr                  task;
 
-    QNetworkAccessManager       qnam;
-    QNetworkReply               *reply;
-    QByteArray                  receivedData;
+    QNetworkReply           *reply;
+    QByteArray              receivedData;
 };
 
 #endif

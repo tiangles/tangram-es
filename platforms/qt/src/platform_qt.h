@@ -2,6 +2,7 @@
 
 #include "platform.h"
 #include <QWidget>
+#include <memory>
 
 class URLTaskWorker;
 class URLTask;
@@ -23,6 +24,6 @@ private slots:
 private:
     QWidget& m_hostWidget;
     QList<URLTaskWorker*> m_workerList;
-    QList<URLTask*> m_taskList;
+    QList<std::shared_ptr<URLTask> > m_taskList;
 };
 
